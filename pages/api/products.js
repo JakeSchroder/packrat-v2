@@ -8,7 +8,6 @@ export default async (req, res) => {
         const products = await db
             .collection("products")
             .find({})
-            .sort({ metacritic: -1 })
             .limit(10)
             .toArray();
 
