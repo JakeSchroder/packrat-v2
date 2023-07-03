@@ -1,34 +1,32 @@
 import Image from "next/image";
 import Link from "next/link";
 
-export default function ProductCard() {
-  const image_link =
-    "https://cdn.shopify.com/s/files/1/0105/8592/products/IMG_8978.jpg?v=1675111387";
-    const image_link_alt =
-    "https://cdn.shopify.com/s/files/1/0105/8592/products/IMG_7143_720x.heic?v=1675111387";
-  const description = "Ring from tunnelvision";
-  const productPage = 'https://shoptunnelvision.com/collections/womens-accessories/products/evolution-stainless-steel-ring';
+export default function ProductCard(props, index) {
+  const errorImage = 'https://static2.bigstockphoto.com/0/8/2/large1500/2802007.jpg';
+  const productURL = `${props.url}/products/${props.handle}?variant=${props.variants[0]['id']}`;
 
   return (
-    <div className="max-w-[250px]">
-      <Link href={productPage}>
+    <div key={index} className="max-w-[250px] min-w-[250px]">
+      <Link href={productURL}>
         <div className="relative" >
           <Image
-            alt={description}
-            src={image_link}
+            alt={props.title}
+            src={props.images[0] !== undefined ? props.images[0]['src'] : errorImage}
             width={250}
             height={150}
+            placeholder="empty"
           />
           <Image
             className=" absolute top-0 left-0 opacity-0 transition-opacity duration-300 transform hover:opacity-100"
-            alt={description}
-            src={image_link_alt}
+            alt={props.title}
+            src={props.images[1]!== undefined ? props.images[1]['src'] : errorImage}
             width={250}
             height={150}
+            placeholder="empty"
           />
         </div>
       </Link>
-      <h2 className=" text-center">{description}</h2>
+      <h2 className=" text-center">{props.title}</h2>
     </div>
   );
 }
