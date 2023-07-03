@@ -1,35 +1,17 @@
-import { mongodb } from "../../utils/database";
+import { mongodb } from "@/utils/database";
+import {
+  FILTER_CATEGORY,
+  SORT_ORDER,
+  PRODUCT_DATA_TRAITS,
+} from "@/utils/constants/products";
 /* 
 EXAMPLE API CALL
 http://localhost:3000/api/products?orderReq=random&categoryReq=Shop_All&pageIndex=5&pageSize=10
 */
-const category = [
-  "Shop_All",
-  "T-Shirts",
-  "Tops",
-  "Layers",
-  "Pullovers",
-  "Shorts",
-  "Pants",
-  "Dresses_&_Skirts",
-  "Shoes",
-  "Jewelry",
-  "Accessories",
-  "Wildcard_Clothing",
-  "Goods",
-];
-const order = new Map([
-  ["low_to_high", { "variants.price": 1 }],
-  ["high_to_low", { "variants.price": -1 }],
-  ["old_to_new", { updated_at: 1 }],
-  ["new_to_old", { updated_at: -1 }],
-  ["random", { random_sort: 1 }],
-]);
-const productDataTraits = "title variants images vendor tags product_type";
 
 export default async (req, res) => {
   let { orderReq, categoryReq, pageIndex, pageSize } = req.query;
-  const sortBy = order.get(orderReq);
+  const sortBy = SORT_ORDER.get(orderReq);
   const filter =
     categoryReq !== "Shop_All"
       ? {
@@ -45,12 +27,12 @@ export default async (req, res) => {
         };
 
   try {
-    const client = await mongodb.clientPromise;
+    const client = mongodb.clientPromise;
     const db = client.db("packrat");
 
     const products = await db
       .collection("products")
-      .find(filter, productDataTraits)
+      .find(filter, PRODUCT_DATA_TRAITS)
       .sort(sortBy)
       .collation({ locale: "en_US", numericOrdering: true })
       .skip(pageIndex * pageSize)
