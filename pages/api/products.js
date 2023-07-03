@@ -1,4 +1,4 @@
-import clientPromise from "../../lib/mongodb";
+import { mongodb } from "../../utils/database";
 /* 
 EXAMPLE API CALL
 http://localhost:3000/api/products?orderReq=random&categoryReq=Shop_All&pageIndex=5&pageSize=10
@@ -45,7 +45,7 @@ export default async (req, res) => {
         };
 
   try {
-    const client = await clientPromise;
+    const client = await mongodb.clientPromise;
     const db = client.db("packrat");
 
     const products = await db
