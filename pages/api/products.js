@@ -25,9 +25,10 @@ const order = new Map([
   ["new_to_old", { updated_at: -1 }],
   ["random", { random_sort: 1 }],
 ]);
-const productDataTraits = "title handle variants images vendor tags product_type url";
+const productDataTraits =
+  "title handle variants images vendor tags product_type url";
 
-export default async (req, res) => {
+export default async function getProducts(req, res) {
   let { orderReq, categoryReq, pageIndex, pageSize } = req.query;
   const sortBy = order.get(orderReq);
   const filter =
@@ -61,4 +62,4 @@ export default async (req, res) => {
   } catch (e) {
     console.error(e);
   }
-};
+}

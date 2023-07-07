@@ -8,7 +8,7 @@ export default function Home() {
   return (
     <main>
       <Header />
-      <ProductGrid/>
+      <ProductGrid />
     </main>
   );
 }
