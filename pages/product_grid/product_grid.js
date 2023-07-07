@@ -1,5 +1,7 @@
 import ProductCard from "./product_card";
 import useSWRInfinite from "swr/infinite";
+import { useInView } from 'react-intersection-observer';
+import { useEffect } from "react";
 
 const fetcher = (...args) => fetch(...args).then((res) => res.json());
 const getKey = (pageIndex, previousPageData) => {
@@ -9,8 +11,21 @@ const getKey = (pageIndex, previousPageData) => {
 
 export default function ProductGrid() {
   const { data, size, setSize } = useSWRInfinite(getKey, fetcher);
-  if (!data) return "loading";
+  const { ref, inView, entry } = useInView({
+    /* Optional options */
+    threshold: 0,
+  });
 
+  useEffect(() => {
+    setTimeout(() => {
+        setSize(size+1)
+    }, 250);
+    }, [inView]);
+
+
+
+  if (!data) return "loading";
+  
   return (
     <div className="  grid grid-cols-4 space-x-1  space-y-5 align-bottom ">
       {data.map((products) => {
@@ -18,7 +33,7 @@ export default function ProductGrid() {
           ProductCard({ ...product }, index * size)
         );
       })}
-      <button onClick={() => setSize(size + 1)}>Load More</button>
+      <div ref={ref}>Hello</div>
     </div>
   );
 }
