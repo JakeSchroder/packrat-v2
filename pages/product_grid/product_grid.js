@@ -1,26 +1,19 @@
 import ProductCard from "./product_card";
 import useSWRInfinite from "swr/infinite";
 import { useEffect } from "react";
+import { fetcher, getKey } from "../services/fetcher";
 
-const fetcher = (...args) => fetch(...args).then((res) => res.json());
-const getKey = (pageIndex, previousPageData) => {
-  if (previousPageData && !previousPageData.length) return null; // reached the end
-  return `/api/products?orderReq=random&categoryReq=Shop_All&pageIndex=${pageIndex}&pageSize=20`; // SWR key
-};
-
-export default function ProductGrid({inView}) {
+export default function ProductGrid({ inView }) {
   const { data, size, setSize } = useSWRInfinite(getKey, fetcher);
 
   useEffect(() => {
     setTimeout(() => {
-        setSize(size+1)
+      setSize(size + 1);
     }, 250);
-    }, [inView]);
+  }, [inView]);
 
+  if (!data) return <div>loading</div>;
 
-
-  if (!data) return "loading";
-  
   return (
     <div className="  grid grid-cols-4 space-x-1  space-y-5 align-bottom ">
       {data.map((products) => {

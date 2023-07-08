@@ -20,6 +20,9 @@ export default function ProductCard(props, index) {
             width={250}
             height={150}
             placeholder="empty"
+            onError={(e) => {
+              console.error(e);
+            }}
           />
           <Image
             className=" absolute top-0 left-0 opacity-0 transition-opacity duration-300 transform hover:opacity-100"
@@ -32,6 +35,9 @@ export default function ProductCard(props, index) {
             width={250}
             height={150}
             placeholder="empty"
+            onError={(e) => {
+              console.error(e);
+            }}
           />
         </div>
       </Link>
