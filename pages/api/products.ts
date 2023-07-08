@@ -1,9 +1,10 @@
 import clientPromise from "../../lib/mongodb";
+import type { NextApiRequest, NextApiResponse } from "next";
 /* 
 EXAMPLE API CALL
 http://localhost:3000/api/products?orderReq=random&categoryReq=Shop_All&pageIndex=5&pageSize=10
 */
-const category = [
+const category: Array<string> = [
   "Shop_All",
   "T-Shirts",
   "Tops",
@@ -25,11 +26,35 @@ const order = new Map([
   ["new_to_old", { updated_at: -1 }],
   ["random", { random_sort: 1 }],
 ]);
-const productDataTraits =
+const productDataTraits: string =
   "title handle variants images vendor tags product_type url";
 
-export default async function getProducts(req, res) {
-  let { orderReq, categoryReq, pageIndex, pageSize } = req.query;
+export interface ProductsPageQueryParams {
+  orderReq: string;
+  categoryReq: string;
+  pageIndex: number;
+  pageSize: number;
+}
+
+export default async function getProducts(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
+  const orderReq = Array.isArray(req.query.orderReq) ? "" : req.query.orderReq;
+  const categoryReq = Array.isArray(req.query.categoryReq)
+    ? ""
+    : req.query.categoryReq;
+  const pageIndex = Array.isArray(req.query.pageIndex)
+    ? 0
+    : Number(req.query.pageIndex);
+  const pageSize = Array.isArray(req.query.pageSize)
+    ? 20
+    : Number(req.query.pageSize);
+
+  if (!orderReq || !categoryReq) {
+    throw new Error("Missing required query parameter");
+  }
+
   const sortBy = order.get(orderReq);
   const filter =
     categoryReq !== "Shop_All"
@@ -37,12 +62,12 @@ export default async function getProducts(req, res) {
           product_type: categoryReq.replaceAll("_", " "),
           "variants.available": true,
           tags: { $nin: ["kid", "Kids"] },
-          title: { $not: { $regex: "Kids" }, $not: { $regex: "Gift Card" } },
+          title: { $not: { $regex: "Kids|Gift Card" } },
         }
       : {
           "variants.available": true,
           tags: { $nin: ["kid", "Kids"] },
-          title: { $not: { $regex: "Kids" }, $not: { $regex: "Gift Card" } },
+          title: { $not: { $regex: "Kids|Gift Card" } },
         };
 
   try {
