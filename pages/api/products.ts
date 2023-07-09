@@ -1,12 +1,12 @@
 import {
   DEFAULT_CATEGORY,
   DEFAULT_SORT_ORDER,
-} from "../../src/constants/products";
-import { getErrorMessage } from "../../src/handlers/error";
-import type { NextApiRequest, NextApiResponse } from "next";
-import { getQueryParam } from "../../src/handlers/requests";
-import Product from "../../src/models/products";
-import { query, ProductsQueryOptions } from "../../src/database/getProducts";
+} from '../../src/constants/products';
+import { getErrorMessage } from '../../src/handlers/error';
+import type { NextApiRequest, NextApiResponse } from 'next';
+import { getQueryParam } from '../../src/handlers/requests';
+import Product from '../../src/models/products';
+import { query, ProductsQueryOptions } from '../../src/database/getProducts';
 
 /* 
 EXAMPLE API CALL
@@ -14,7 +14,7 @@ http://localhost:3000/api/products?orderReq=random&categoryReq=Shop_All&pageInde
 */
 export default async function getProducts(
   req: NextApiRequest,
-  res: NextApiResponse
+  res: NextApiResponse,
 ) {
   const options: ProductsQueryOptions = {
     orderReq: getQueryParam(DEFAULT_SORT_ORDER, req.query.orderReq),

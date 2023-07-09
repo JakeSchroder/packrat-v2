@@ -1,5 +1,5 @@
 // External dependencies
-import { ObjectId } from "mongodb";
+import { ObjectId } from 'mongodb';
 
 // Class Implementation
 export default class Product {

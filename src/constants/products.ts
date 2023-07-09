@@ -1,18 +1,18 @@
 import { Sort, SortDirection } from "mongodb";
 export const CATEGORIES: Array<string> = [
-  "Shop_All",
-  "T-Shirts",
-  "Tops",
-  "Layers",
-  "Pullovers",
-  "Shorts",
-  "Pants",
-  "Dresses_&_Skirts",
-  "Shoes",
-  "Jewelry",
-  "Accessories",
-  "Wildcard_Clothing",
-  "Goods",
+  'Shop_All',
+  'T-Shirts',
+  'Tops',
+  'Layers',
+  'Pullovers',
+  'Shorts',
+  'Pants',
+  'Dresses_&_Skirts',
+  'Shoes',
+  'Jewelry',
+  'Accessories',
+  'Wildcard_Clothing',
+  'Goods',
 ];
 
 interface SortOrderMap {
@@ -38,5 +38,5 @@ export const PRODUCT_DATA_TRAITS: Array<string> = [
   "url",
 ];
 
-export const DEFAULT_CATEGORY = "Shop_All";
-export const DEFAULT_SORT_ORDER = "random";
+export const DEFAULT_CATEGORY = 'Shop_All';
+export const DEFAULT_SORT_ORDER = 'random';
