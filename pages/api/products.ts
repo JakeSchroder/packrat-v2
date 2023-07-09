@@ -5,10 +5,10 @@ import {
   PRODUCT_DATA_TRAITS,
   DEFAULT_CATEGORY,
   DEFAULT_SORT_ORDER,
-} from "../constants/products";
-import { getErrorMessage } from "../handlers/error";
+} from "../../src/constants/products";
+import { getErrorMessage } from "../../src/handlers/error";
 import type { NextApiRequest, NextApiResponse } from "next";
-import { getQueryParam } from "../handlers/requests";
+import { getQueryParam } from "../../src/handlers/requests";
 
 const getFilter = (categoryReq: string) => {
   return {
