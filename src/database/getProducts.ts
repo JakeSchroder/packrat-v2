@@ -1,7 +1,7 @@
-import clientPromise from "../../lib/mongodb";
-import Product from "../models/products";
-import { getFilter, getOptions } from "../helpers/query";
-import { SORT_ORDER_MAP } from "../constants/products";
+import clientPromise from '../../lib/mongodb';
+import Product from '../models/products';
+import { getFilter, getOptions } from '../helpers/query';
+import { SORT_ORDER_MAP } from '../constants/products';
 
 export interface ProductsQueryOptions {
   pageIndex: number | 0;
@@ -11,7 +11,7 @@ export interface ProductsQueryOptions {
 }
 
 export const query = async (
-  options: ProductsQueryOptions
+  options: ProductsQueryOptions,
 ): Promise<Product[]> => {
   const [sortBy, sortDirection] = SORT_ORDER_MAP[options.orderReq];
   const findFilter = getFilter(options.categoryReq);
@@ -22,11 +22,11 @@ export const query = async (
   // We want to maintain a steady single connection per API instance
   // see lib/mongodb.alt.ts for possible solution
   const client = await clientPromise;
-  const db = client.db("packrat");
+  const db = client.db('packrat');
   const query = db
-    .collection("products")
+    .collection('products')
     .find(findFilter, findOptions)
-    .collation({ locale: "en_US", numericOrdering: true })
+    .collation({ locale: 'en_US', numericOrdering: true })
     .skip(options.pageIndex * options.pageSize)
     .limit(options.pageSize)
     .sort(sortBy, sortDirection);

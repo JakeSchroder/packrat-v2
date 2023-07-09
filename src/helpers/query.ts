@@ -3,18 +3,18 @@ import {
   PRODUCT_DATA_TRAITS,
   DEFAULT_CATEGORY,
   DEFAULT_SORT_ORDER,
-} from "../constants/products";
-import type { Filter, FindOptions } from "mongodb";
-import Product from "../models/products";
+} from '../constants/products';
+import type { Filter, FindOptions } from 'mongodb';
+import Product from '../models/products';
 
 export const getFilter = (categoryReq: string): Filter<Document> => {
   return {
     ...(categoryReq !== DEFAULT_CATEGORY
-      ? { product_type: categoryReq.replaceAll("_", " ") }
+      ? { product_type: categoryReq.replaceAll('_', ' ') }
       : {}),
-    "variants.available": true,
-    tags: { $nin: ["kid", "Kids"] },
-    title: { $not: { $regex: "Kids|Gift Card" } },
+    'variants.available': true,
+    tags: { $nin: ['kid', 'Kids'] },
+    title: { $not: { $regex: 'Kids|Gift Card' } },
   };
 };
 

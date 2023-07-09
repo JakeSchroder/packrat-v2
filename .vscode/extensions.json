@@ -1,0 +1,7 @@
+{
+    "recommendations": [
+        "BriteSnow.vscode-toggle-quotes",
+        "esbenp.prettier-vscode",
+        "ms-python.black-formatter"
+    ]
+}

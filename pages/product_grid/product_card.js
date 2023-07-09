@@ -1,10 +1,10 @@
-import Image from "next/image";
-import Link from "next/link";
+import Image from 'next/image';
+import Link from 'next/link';
 
 export default function ProductCard(props, index) {
   const errorImage =
-    "https://static2.bigstockphoto.com/0/8/2/large1500/2802007.jpg";
-  const productURL = `${props.url}/products/${props.handle}?variant=${props.variants[0]["id"]}`;
+    'https://static2.bigstockphoto.com/0/8/2/large1500/2802007.jpg';
+  const productURL = `${props.url}/products/${props.handle}?variant=${props.variants[0]['id']}`;
 
   return (
     <div key={index} className="max-w-[250px] min-w-[250px]">
@@ -14,7 +14,7 @@ export default function ProductCard(props, index) {
             alt={props.title}
             src={
               props.images[0] !== undefined
-                ? props.images[0]["src"]
+                ? props.images[0]['src']
                 : errorImage
             }
             width={250}
@@ -27,7 +27,7 @@ export default function ProductCard(props, index) {
             alt={props.title}
             src={
               props.images[1] !== undefined
-                ? props.images[1]["src"]
+                ? props.images[1]['src']
                 : errorImage
             }
             width={250}
@@ -42,23 +42,23 @@ export default function ProductCard(props, index) {
   );
 }
 ProductCard.defaultProps = {
-  title: "",
-  handle: "",
+  title: '',
+  handle: '',
   variants: {
     0: {
-      id: "",
+      id: '',
     },
   },
   images: {
     0: {
-      src: "",
+      src: '',
     },
     1: {
-      src: "",
+      src: '',
     },
   },
-  vendor: "",
-  tags: "",
-  product_type: "",
-  url: "",
+  vendor: '',
+  tags: '',
+  product_type: '',
+  url: '',
 };

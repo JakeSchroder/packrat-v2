@@ -1,5 +1,5 @@
 // External dependencies
-import { ObjectId } from "mongodb";
+import { ObjectId } from 'mongodb';
 
 // Class Implementation
 export default class Product {
@@ -19,7 +19,7 @@ export default class Product {
     public images: Image[],
     public options: Option[],
     public random_sort: string,
-    public url: string
+    public url: string,
   ) {}
 }
 
@@ -41,7 +41,7 @@ class Variant {
     public position: number,
     public product_id: number,
     public created_at: string,
-    public updated_at: string
+    public updated_at: string,
   ) {}
 }
 
@@ -55,7 +55,7 @@ class Image {
     public variant_ids: number[],
     public src: string,
     public width: number,
-    public height: number
+    public height: number,
   ) {}
 }
 
@@ -63,6 +63,6 @@ class Option {
   constructor(
     public name: string,
     public position: number,
-    public values: string[]
+    public values: string[],
   ) {}
 }
