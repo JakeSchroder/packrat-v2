@@ -30,3 +30,6 @@ export const PRODUCT_DATA_TRAITS: string = [
   "product_type",
   "url",
 ].join(" ");
+
+export const DEFAULT_CATEGORY = "Shop_All";
+export const DEFAULT_SORT_ORDER = "random";
