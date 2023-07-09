@@ -19,6 +19,7 @@ export default function ProductCard(props, index) {
             }
             width={250}
             height={150}
+            unoptimized
             placeholder="empty"
           />
           <Image
@@ -31,6 +32,7 @@ export default function ProductCard(props, index) {
             }
             width={250}
             height={150}
+            unoptimized
             placeholder="empty"
           />
         </div>
