@@ -1,3 +1,4 @@
+// @ts-ignore
 import clientPromise from "../../lib/mongodb";
 import type { NextApiRequest, NextApiResponse } from "next";
 /* 
@@ -71,6 +72,7 @@ export default async function getProducts(
         };
 
   try {
+    // @ts-ignore
     const client = await clientPromise;
     const db = client.db("packrat");
 
