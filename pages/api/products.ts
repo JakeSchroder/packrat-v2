@@ -9,8 +9,9 @@ import {
 import { getErrorMessage } from "../../src/handlers/error";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { getQueryParam } from "../../src/handlers/requests";
+import type { Filter, FindOptions } from "mongodb";
 
-const getFilter = (categoryReq: string) => {
+const getFilter = (categoryReq: string): Filter<Document> => {
   return {
     ...(categoryReq !== DEFAULT_CATEGORY
       ? { product_type: categoryReq.replaceAll("_", " ") }
@@ -21,6 +22,9 @@ const getFilter = (categoryReq: string) => {
   };
 };
 
+// const getOptions = (): FindOptions<Document> => {
+//   return PRODUCT_DATA_TRAITS;
+// }
 /* 
 EXAMPLE API CALL
 http://localhost:3000/api/products?orderReq=random&categoryReq=Shop_All&pageIndex=5&pageSize=10
@@ -43,17 +47,19 @@ export default async function getProducts(
   const filter = getFilter(categoryReq);
 
   try {
-    // @ts-ignore
+    // This needs refinement as the db connections will increase
     const client = await clientPromise;
     const db = client.db("packrat");
     const query = db
       .collection("products")
-      .find(filter, PRODUCT_DATA_TRAITS)
+      // NOTE: this used to be passed in as a second param PRODUCT_DATA_TRAITS but its not working due to TS error
+      .find(filter)
       .collation({ locale: "en_US", numericOrdering: true })
       .skip(pageIndex * pageSize)
       .limit(pageSize);
 
-    if (orderReq) query.sort(SORT_ORDER_MAP.get(orderReq));
+    // NOTE: Sort order borked because it is improperly typed atm
+    // if (orderReq) query.sort(SORT_ORDER_MAP.get(orderReq));
 
     const products = await query.toArray();
 
