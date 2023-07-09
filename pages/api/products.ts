@@ -1,42 +1,24 @@
 // @ts-ignore
 import clientPromise from "../../lib/mongodb";
+import { SORT_ORDER_MAP, PRODUCT_DATA_TRAITS } from "../constants/products";
+import { getErrorMessage } from "../handlers/error";
 import type { NextApiRequest, NextApiResponse } from "next";
+
+const getFilter = (categoryReq: string) => {
+  return {
+    ...(categoryReq !== "Shop_All"
+      ? { product_type: categoryReq.replaceAll("_", " ") }
+      : {}),
+    "variants.available": true,
+    tags: { $nin: ["kid", "Kids"] },
+    title: { $not: { $regex: "Kids|Gift Card" } },
+  };
+};
+
 /* 
 EXAMPLE API CALL
 http://localhost:3000/api/products?orderReq=random&categoryReq=Shop_All&pageIndex=5&pageSize=10
 */
-const category: Array<string> = [
-  "Shop_All",
-  "T-Shirts",
-  "Tops",
-  "Layers",
-  "Pullovers",
-  "Shorts",
-  "Pants",
-  "Dresses_&_Skirts",
-  "Shoes",
-  "Jewelry",
-  "Accessories",
-  "Wildcard_Clothing",
-  "Goods",
-];
-const order = new Map([
-  ["low_to_high", { "variants.price": 1 }],
-  ["high_to_low", { "variants.price": -1 }],
-  ["old_to_new", { updated_at: 1 }],
-  ["new_to_old", { updated_at: -1 }],
-  ["random", { random_sort: 1 }],
-]);
-const productDataTraits: string =
-  "title handle variants images vendor tags product_type url";
-
-export interface ProductsPageQueryParams {
-  orderReq: string;
-  categoryReq: string;
-  pageIndex: number;
-  pageSize: number;
-}
-
 export default async function getProducts(
   req: NextApiRequest,
   res: NextApiResponse
@@ -56,20 +38,8 @@ export default async function getProducts(
     throw new Error("Missing required query parameter");
   }
 
-  const sortBy = order.get(orderReq);
-  const filter =
-    categoryReq !== "Shop_All"
-      ? {
-          product_type: categoryReq.replaceAll("_", " "),
-          "variants.available": true,
-          tags: { $nin: ["kid", "Kids"] },
-          title: { $not: { $regex: "Kids|Gift Card" } },
-        }
-      : {
-          "variants.available": true,
-          tags: { $nin: ["kid", "Kids"] },
-          title: { $not: { $regex: "Kids|Gift Card" } },
-        };
+  const sortBy = SORT_ORDER_MAP.get(orderReq);
+  const filter = getFilter(categoryReq);
 
   try {
     // @ts-ignore
@@ -78,15 +48,17 @@ export default async function getProducts(
 
     const products = await db
       .collection("products")
-      .find(filter, productDataTraits)
+      .find(filter, PRODUCT_DATA_TRAITS)
       .sort(sortBy)
       .collation({ locale: "en_US", numericOrdering: true })
       .skip(pageIndex * pageSize)
-      .limit(Number(pageSize))
+      .limit(pageSize)
       .toArray();
 
     res.json(products);
-  } catch (e) {
-    console.error(e);
+  } catch (error) {
+    const message = getErrorMessage(error);
+    console.error(message);
+    res.status(500).send({ message });
   }
 }
