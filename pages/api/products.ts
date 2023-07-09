@@ -14,7 +14,7 @@ http://localhost:3000/api/products?orderReq=random&categoryReq=Shop_All&pageInde
 */
 export default async function getProducts(
   req: NextApiRequest,
-  res: NextApiResponse
+  res: NextApiResponse,
 ) {
   const options: ProductsQueryOptions = {
     orderReq: getQueryParam(DEFAULT_SORT_ORDER, req.query.orderReq),

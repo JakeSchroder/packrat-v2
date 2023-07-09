@@ -1,4 +1,4 @@
-import type { QueryParam } from "../types/requests";
+import type { QueryParam } from '../types/requests';
 
 export const getQueryParam = (defaultValue: any, queryParam: QueryParam) => {
   if (queryParam === undefined) {
