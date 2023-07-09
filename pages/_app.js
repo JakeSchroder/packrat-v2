@@ -1,4 +1,4 @@
-import "@/styles/globals.css";
+import "../styles/globals.css";
 import { Montserrat_Alternates } from "next/font/google";
 
 const monserrat_alt = Montserrat_Alternates({
