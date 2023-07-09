@@ -1,3 +1,4 @@
+import { Sort, SortDirection } from "mongodb";
 export const CATEGORIES: Array<string> = [
   "Shop_All",
   "T-Shirts",
@@ -13,14 +14,20 @@ export const CATEGORIES: Array<string> = [
   "Wildcard_Clothing",
   "Goods",
 ];
-export const SORT_ORDER_MAP = new Map([
-  ["low_to_high", { "variants.price": 1 }],
-  ["high_to_low", { "variants.price": -1 }],
-  ["old_to_new", { updated_at: 1 }],
-  ["new_to_old", { updated_at: -1 }],
-  ["random", { random_sort: 1 }],
-]);
-export const PRODUCT_DATA_TRAITS: string = [
+
+interface SortOrderMap {
+  [key: string]: [Sort, SortDirection];
+}
+
+export const SORT_ORDER_MAP: SortOrderMap = {
+  low_to_high: ["variants.price", 1],
+  high_to_low: ["variants.price", 1],
+  old_to_new: ["updated_at", 1],
+  new_to_old: ["updated_at", -1],
+  random: ["random_sort", 1],
+};
+
+export const PRODUCT_DATA_TRAITS: Array<string> = [
   "title",
   "handle",
   "variants",
@@ -29,7 +36,7 @@ export const PRODUCT_DATA_TRAITS: string = [
   "tags",
   "product_type",
   "url",
-].join(" ");
+];
 
 export const DEFAULT_CATEGORY = "Shop_All";
 export const DEFAULT_SORT_ORDER = "random";
