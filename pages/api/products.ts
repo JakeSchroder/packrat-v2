@@ -1,92 +1,66 @@
 // @ts-ignore
 import clientPromise from "../../lib/mongodb";
+import {
+  SORT_ORDER_MAP,
+  PRODUCT_DATA_TRAITS,
+  DEFAULT_CATEGORY,
+  DEFAULT_SORT_ORDER,
+} from "../../src/constants/products";
+import { getErrorMessage } from "../../src/handlers/error";
 import type { NextApiRequest, NextApiResponse } from "next";
+import { getQueryParam } from "../../src/handlers/requests";
+
+const getFilter = (categoryReq: string) => {
+  return {
+    ...(categoryReq !== DEFAULT_CATEGORY
+      ? { product_type: categoryReq.replaceAll("_", " ") }
+      : {}),
+    "variants.available": true,
+    tags: { $nin: ["kid", "Kids"] },
+    title: { $not: { $regex: "Kids|Gift Card" } },
+  };
+};
+
 /* 
 EXAMPLE API CALL
 http://localhost:3000/api/products?orderReq=random&categoryReq=Shop_All&pageIndex=5&pageSize=10
 */
-const category: Array<string> = [
-  "Shop_All",
-  "T-Shirts",
-  "Tops",
-  "Layers",
-  "Pullovers",
-  "Shorts",
-  "Pants",
-  "Dresses_&_Skirts",
-  "Shoes",
-  "Jewelry",
-  "Accessories",
-  "Wildcard_Clothing",
-  "Goods",
-];
-const order = new Map([
-  ["low_to_high", { "variants.price": 1 }],
-  ["high_to_low", { "variants.price": -1 }],
-  ["old_to_new", { updated_at: 1 }],
-  ["new_to_old", { updated_at: -1 }],
-  ["random", { random_sort: 1 }],
-]);
-const productDataTraits: string =
-  "title handle variants images vendor tags product_type url";
-
-export interface ProductsPageQueryParams {
-  orderReq: string;
-  categoryReq: string;
-  pageIndex: number;
-  pageSize: number;
-}
-
 export default async function getProducts(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const orderReq = Array.isArray(req.query.orderReq) ? "" : req.query.orderReq;
-  const categoryReq = Array.isArray(req.query.categoryReq)
-    ? ""
-    : req.query.categoryReq;
-  const pageIndex = Array.isArray(req.query.pageIndex)
-    ? 0
-    : Number(req.query.pageIndex);
-  const pageSize = Array.isArray(req.query.pageSize)
-    ? 20
-    : Number(req.query.pageSize);
+  const orderReq: string = getQueryParam(
+    DEFAULT_SORT_ORDER,
+    req.query.orderReq
+  );
+  const categoryReq: string = getQueryParam(
+    DEFAULT_CATEGORY,
+    req.query.categoryReq
+  );
+  const pageIndex: number = Number(getQueryParam(0, req.query.pageIndex));
+  const pageSize = Number(getQueryParam(1, req.query.pageSize));
 
-  if (!orderReq || !categoryReq) {
-    throw new Error("Missing required query parameter");
-  }
-
-  const sortBy = order.get(orderReq);
-  const filter =
-    categoryReq !== "Shop_All"
-      ? {
-          product_type: categoryReq.replaceAll("_", " "),
-          "variants.available": true,
-          tags: { $nin: ["kid", "Kids"] },
-          title: { $not: { $regex: "Kids|Gift Card" } },
-        }
-      : {
-          "variants.available": true,
-          tags: { $nin: ["kid", "Kids"] },
-          title: { $not: { $regex: "Kids|Gift Card" } },
-        };
+  const filter = getFilter(categoryReq);
 
   try {
     // @ts-ignore
     const client = await clientPromise;
     const db = client.db("packrat");
-
-    const products = await db
+    const query = db
       .collection("products")
-      .find(filter, productDataTraits)
-      .sort(sortBy)
+      .find(filter, PRODUCT_DATA_TRAITS)
       .collation({ locale: "en_US", numericOrdering: true })
       .skip(pageIndex * pageSize)
-      .limit(Number(pageSize))
-      .toArray();
+      .limit(pageSize);
+
+    if (orderReq) query.sort(SORT_ORDER_MAP.get(orderReq));
+
+    const products = await query.toArray();
 
     res.json(products);
-  } catch (e) {
-    console.error(e);
+  } catch (error) {
+    const message = getErrorMessage(error);
+    console.error(message);
+    res.status(500).send({ message });
   }
 }
