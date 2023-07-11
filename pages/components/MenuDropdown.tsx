@@ -1,26 +1,26 @@
-import Image from 'next/image';
-
+import { Menu, MenuButton, MenuList, MenuItem, Button } from '@chakra-ui/react';
+import { ChevronDownIcon } from '@chakra-ui/icons';
 interface MenuDropdownProps {
   title: string;
   priority: boolean;
+  menuItems: Array<string>;
 }
 
-export default function MenuDropdown({ title, priority }: MenuDropdownProps) {
+export default function MenuDropdown({ title, menuItems }: MenuDropdownProps) {
   return (
-    <>
-      <button className=" font-semibold">
-        <div className="flex">
-          <span>{title}</span>
-          <Image
-            src="/down-arrow.svg"
-            alt="Down Arrow"
-            width={'24'}
-            height={'24'}
-            priority={priority}
-            style={{ width: '24', height: '24' }}
-          />
-        </div>
-      </button>
-    </>
+    <Menu>
+      <MenuButton
+        className=" font-semibold"
+        as={Button}
+        rightIcon={<ChevronDownIcon />}
+      >
+        {title}
+      </MenuButton>
+      <MenuList>
+        {menuItems?.map((item, index) => {
+          return <MenuItem key={index}>{item}</MenuItem>;
+        })}
+      </MenuList>
+    </Menu>
   );
 }
