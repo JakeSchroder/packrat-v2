@@ -19,7 +19,10 @@ export default function MenuDropdown({ title, menuItems }: MenuDropdownProps) {
       <MenuList className=" box-border border-2 border-text rounded-md bg-secondary-button">
         {menuItems?.map((item, index) => {
           return (
-            <MenuItem className=" hover:bg-accent" key={index}>
+            <MenuItem
+              className=" hover:bg-accent hover:font-medium"
+              key={index}
+            >
               {item}
             </MenuItem>
           );

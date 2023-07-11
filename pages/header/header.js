@@ -5,7 +5,7 @@ import { CATEGORIES, SORT_ORDER_MAP } from '../../src/constants/products';
 export default function Header() {
   return (
     <>
-      <div className=" flex justify-between px-24 py-6">
+      <div className=" flex flex-row items-center justify-between px-24 py-6">
         <MenuDropdown title={'Filter'} menuItems={CATEGORIES} />
         <MenuDropdown title={'Sort'} />
         <Logo />
