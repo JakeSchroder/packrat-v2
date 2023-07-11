@@ -8,17 +8,21 @@ interface MenuDropdownProps {
 
 export default function MenuDropdown({ title, menuItems }: MenuDropdownProps) {
   return (
-    <Menu>
+    <Menu closeOnBlur={true} closeOnSelect={true} preventOverflow={true}>
       <MenuButton
-        className=" font-semibold"
+        className=" font-semibold h-5"
         as={Button}
         rightIcon={<ChevronDownIcon />}
       >
         {title}
       </MenuButton>
-      <MenuList>
+      <MenuList className=" box-border border-2 border-text rounded-md bg-secondary-button">
         {menuItems?.map((item, index) => {
-          return <MenuItem key={index}>{item}</MenuItem>;
+          return (
+            <MenuItem className=" hover:bg-accent" key={index}>
+              {item}
+            </MenuItem>
+          );
         })}
       </MenuList>
     </Menu>

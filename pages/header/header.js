@@ -1,6 +1,6 @@
 import MenuDropdown from '../components/MenuDropdown';
 import Logo from '../components/Logo';
-import { CATEGORIES } from '../../src/constants/products';
+import { CATEGORIES, SORT_ORDER_MAP } from '../../src/constants/products';
 
 export default function Header() {
   return (

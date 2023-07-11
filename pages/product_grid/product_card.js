@@ -9,33 +9,16 @@ export default function ProductCard(props, index) {
   return (
     <div key={index} className="max-w-[250px] min-w-[250px]">
       <Link href={productURL}>
-        <div className="relative">
-          <Image
-            alt={props.title}
-            src={
-              props.images[0] !== undefined
-                ? props.images[0]['src']
-                : errorImage
-            }
-            width={250}
-            height={150}
-            unoptimized
-            placeholder="empty"
-          />
-          <Image
-            className=" absolute top-0 left-0 opacity-0 transition-opacity duration-300 transform hover:opacity-100"
-            alt={props.title}
-            src={
-              props.images[1] !== undefined
-                ? props.images[1]['src']
-                : errorImage
-            }
-            width={250}
-            height={150}
-            unoptimized
-            placeholder="empty"
-          />
-        </div>
+        <Image
+          alt={props.title}
+          src={
+            props.images[0] !== undefined ? props.images[0]['src'] : errorImage
+          }
+          width={250}
+          height={150}
+          unoptimized
+          placeholder="empty"
+        />
       </Link>
       <h2 className=" text-center">{props.title}</h2>
     </div>
