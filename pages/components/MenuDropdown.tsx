@@ -20,7 +20,7 @@ export default function MenuDropdown({ title, menuItems }: MenuDropdownProps) {
         {menuItems?.map((item, index) => {
           return (
             <MenuItem
-              className=" hover:bg-accent hover:font-medium"
+              className=" hover:bg-accent hover:font-medium p-2 h-8"
               key={index}
             >
               {item}

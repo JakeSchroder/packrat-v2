@@ -7,7 +7,7 @@ export default function Header() {
     <>
       <div className=" flex flex-row items-center justify-between px-24 py-6">
         <MenuDropdown title={'Filter'} menuItems={CATEGORIES} />
-        <MenuDropdown title={'Sort'} />
+        <MenuDropdown title={'Sort'} menuItems={Object.keys(SORT_ORDER_MAP)} />
         <Logo />
         <button className=" font-semibold">Account</button>
         <button className=" font-semibold">Cart</button>
