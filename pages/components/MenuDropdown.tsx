@@ -16,7 +16,7 @@ export default function MenuDropdown({ title, menuItems }: MenuDropdownProps) {
       >
         {title}
       </MenuButton>
-      <MenuList className=" box-border border-2 border-text rounded-md bg-secondary-button">
+      <MenuList className=" box-border border-2 border-text rounded-md bg-background">
         {menuItems?.map((item, index) => {
           return (
             <MenuItem
