@@ -23,7 +23,7 @@ export default function MenuDropdown({ title, menuItems }: MenuDropdownProps) {
               className=" hover:bg-accent hover:font-medium p-2 h-8"
               key={index}
             >
-              {item}
+              {item.replaceAll('_', ' ')}
             </MenuItem>
           );
         })}
