@@ -7,8 +7,11 @@ export default function ProductCard(props, index) {
   const productURL = `${props.url}/products/${props.handle}?variant=${props.variants[0]['id']}`;
 
   return (
-    <div key={index} className="max-w-[250px] min-w-[250px]">
-      <Link href={productURL}>
+    <div
+      key={index}
+      className=" flex-row max-w-[200px] min-w-[1px] justify-items-end"
+    >
+      <Link href={productURL} className=" ">
         <Image
           alt={props.title}
           src={
@@ -20,7 +23,7 @@ export default function ProductCard(props, index) {
           placeholder="empty"
         />
       </Link>
-      <h2 className=" text-center">{props.title}</h2>
+      <h2 className=" text-center ">{props.title}</h2>
     </div>
   );
 }

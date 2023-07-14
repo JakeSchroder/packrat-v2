@@ -20,7 +20,7 @@ export default function ProductGrid({ inView }) {
   if (!data) return 'loading';
 
   return (
-    <div className="  grid grid-cols-4 space-x-1  space-y-5 align-bottom ">
+    <div className="  grid 2xl:grid-cols-5 xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-2 space-x-1  space-y-5 align-bottom justify-items-center">
       {data.map((products) => {
         return products.map((product, index) =>
           ProductCard({ ...product }, index * size),
