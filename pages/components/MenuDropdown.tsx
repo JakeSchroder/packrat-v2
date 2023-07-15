@@ -10,13 +10,13 @@ export default function MenuDropdown({ title, menuItems }: MenuDropdownProps) {
   return (
     <Menu closeOnBlur={true} closeOnSelect={true} preventOverflow={true}>
       <MenuButton
-        className=" font-semibold h-5"
+        className=" font-semibold h-5 inline-block"
         as={Button}
         rightIcon={<ChevronDownIcon />}
       >
         {title}
       </MenuButton>
-      <MenuList className=" box-border border-2 border-text rounded-md bg-background">
+      <MenuList className=" box-border border-2 border-text rounded-md bg-background relative">
         {menuItems?.map((item, index) => {
           return (
             <MenuItem

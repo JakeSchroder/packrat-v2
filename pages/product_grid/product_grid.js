@@ -12,7 +12,7 @@ const getKey = (pageIndex, previousPageData) => {
 export default function ProductGrid({ inView }) {
   const { data, size, setSize } = useSWRInfinite(getKey, fetcher);
   const gridClassName =
-    'grid 2xl:grid-cols-5 xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-2 space-x-1  space-y-12 justify-items-center items-center';
+    'grid 2xl:grid-cols-5 xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-2 space-x-1 space-y-12 justify-items-center items-center pt-48';
 
   useEffect(() => {
     setTimeout(() => {
