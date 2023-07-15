@@ -1,6 +1,7 @@
 import ProductCard from './product_card';
 import useSWRInfinite from 'swr/infinite';
 import { useEffect } from 'react';
+import SkeletonCard from './skeleton_card';
 
 const fetcher = (...args) => fetch(...args).then((res) => res.json());
 const getKey = (pageIndex, previousPageData) => {
@@ -10,6 +11,8 @@ const getKey = (pageIndex, previousPageData) => {
 
 export default function ProductGrid({ inView }) {
   const { data, size, setSize } = useSWRInfinite(getKey, fetcher);
+  const gridClassName =
+    'grid 2xl:grid-cols-5 xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-2 space-x-1 space-y-12 justify-items-center items-center pt-48';
 
   useEffect(() => {
     setTimeout(() => {
@@ -17,10 +20,17 @@ export default function ProductGrid({ inView }) {
     }, 250);
   }, [inView]);
 
-  if (!data) return 'loading';
+  if (!data)
+    return (
+      <div className={gridClassName}>
+        {Array.apply(null, { length: 24 }).map((e, i) => (
+          <SkeletonCard key={i} />
+        ))}
+      </div>
+    );
 
   return (
-    <div className="  grid grid-cols-4 space-x-1  space-y-5 align-bottom ">
+    <div className={gridClassName}>
       {data.map((products) => {
         return products.map((product, index) =>
           ProductCard({ ...product }, index * size),

@@ -7,37 +7,32 @@ export default function ProductCard(props, index) {
   const productURL = `${props.url}/products/${props.handle}?variant=${props.variants[0]['id']}`;
 
   return (
-    <div key={index} className="max-w-[250px] min-w-[250px]">
-      <Link href={productURL}>
-        <div className="relative">
-          <Image
-            alt={props.title}
-            src={
-              props.images[0] !== undefined
-                ? props.images[0]['src']
-                : errorImage
-            }
-            width={250}
-            height={150}
-            unoptimized
-            placeholder="empty"
-          />
-          <Image
-            className=" absolute top-0 left-0 opacity-0 transition-opacity duration-300 transform hover:opacity-100"
-            alt={props.title}
-            src={
-              props.images[1] !== undefined
-                ? props.images[1]['src']
-                : errorImage
-            }
-            width={250}
-            height={150}
-            unoptimized
-            placeholder="empty"
-          />
-        </div>
+    <div key={index} className=" flex-row max-w-[200px] min-w-[1px]">
+      <Link href={productURL} className=" block relative overflow-hidden z-0">
+        <Image
+          alt={props.title}
+          className=" rounded-lg justify-items-center hover:opacity-0"
+          src={
+            props.images[0] !== undefined ? props.images[0]['src'] : errorImage
+          }
+          width={250}
+          height={150}
+          unoptimized
+          placeholder="empty"
+        />
+        <Image
+          alt={props.title}
+          className=" absolute top-0 left-0 rounded-lg justify-items-center opacity-0 transition-opacity duration-500 hover:opacity-100"
+          src={
+            props.images[1] !== undefined ? props.images[1]['src'] : errorImage
+          }
+          width={250}
+          height={150}
+          unoptimized
+          placeholder="empty"
+        />
       </Link>
-      <h2 className=" text-center">{props.title}</h2>
+      <h2 className=" text-center ">${props.variants[0]['price']}</h2>
     </div>
   );
 }

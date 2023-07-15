@@ -8,9 +8,9 @@ module.exports = {
   theme: {
     colors: {
       text: '#000000',
-      background: '#e3e2cb',
-      'primary-button': '#3a6364',
-      'secondary-button': '#fcf8fb',
+      background: '#fcf8fb',
+      'primary-button': '#847C44',
+      'secondary-button': '#c2c2c2',
       accent: '#e7d982',
     },
     extend: {
@@ -21,6 +21,15 @@ module.exports = {
       },
       fontFamily: {
         sans: ['var(--font-montserrat-alt)'],
+      },
+      fontSize: {
+        sm: '0.8rem',
+        base: '1rem',
+        xl: '1.25rem',
+        '2xl': '1.563rem',
+        '3xl': '1.953rem',
+        '4xl': '2.441rem',
+        '5xl': '3.052rem',
       },
     },
   },

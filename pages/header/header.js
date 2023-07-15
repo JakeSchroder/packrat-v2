@@ -1,33 +1,18 @@
 import MenuDropdown from '../components/MenuDropdown';
 import Logo from '../components/Logo';
+import { CATEGORIES, SORT_ORDER_MAP } from '../../src/constants/products';
 
 export default function Header() {
-  const typeFilter = [
-    'All',
-    'T-Shirts',
-    'Tops',
-    'Layers',
-    'Pullovers',
-    'Shorts',
-    'Pants',
-    'Dresses_&_Skirts',
-    'Shoes',
-    'Jewelry',
-    'Accessories',
-    'Wildcard_Clothing',
-    'Goods',
-  ];
-
   return (
-    <>
-      <div className=" flex justify-between px-24 py-6">
-        <MenuDropdown title={'Shop All'} priority></MenuDropdown>
-        <MenuDropdown title={'Sort'} priority></MenuDropdown>
+    <div className="fixed min-w-full bg-background z-10 ">
+      <div className=" flex flex-row items-center justify-between px-24 py-6">
+        <MenuDropdown title={'Filter'} menuItems={CATEGORIES} />
+        <MenuDropdown title={'Sort'} menuItems={Object.keys(SORT_ORDER_MAP)} />
         <Logo />
         <button className=" font-semibold">Account</button>
         <button className=" font-semibold">Cart</button>
       </div>
       <hr className="border-4" />
-    </>
+    </div>
   );
 }
