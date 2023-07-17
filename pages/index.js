@@ -11,12 +11,19 @@ export default function Home() {
     /* Optional options */
     threshold: 0,
   });
-  const [filter, setFilter] = useState('Shop_All');
-  const [sort, setSort] = useState('random');
+  const [categoryFilter, setCategoryFilter] = useState('Shop_All');
+  const [orderSort, setOrderSort] = useState('random');
   return (
     <main>
-      <Header setFilter={setFilter} setSort={setSort} />
-      <ProductGrid inView={inView} filter={filter} sort={sort} />
+      <Header
+        setCategoryFilter={setCategoryFilter}
+        setOrderSort={setOrderSort}
+      />
+      <ProductGrid
+        inView={inView}
+        categoryFilter={categoryFilter}
+        orderSort={orderSort}
+      />
       <div ref={ref} className=" pt-12">
         <Footer />
       </div>

@@ -5,10 +5,10 @@ import SkeletonCard from './skeleton_card';
 
 const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
-export default function ProductGrid({ inView, filter, sort }) {
+export default function ProductGrid({ inView, categoryFilter, orderSort }) {
   const getKey = (pageIndex, previousPageData) => {
     if (previousPageData && !previousPageData.length) return null; // reached the end
-    return `/api/products?orderReq=${sort}&categoryReq=${filter}&pageIndex=${pageIndex}&pageSize=20`; // SWR key
+    return `/api/products?orderReq=${orderSort}&categoryReq=${categoryFilter}&pageIndex=${pageIndex}&pageSize=20`; // SWR key
   };
   const { data, size, setSize } = useSWRInfinite(getKey, fetcher);
   const gridClassName =

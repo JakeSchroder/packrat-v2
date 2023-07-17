@@ -4,13 +4,13 @@ interface MenuDropdownProps {
   title: string;
   priority: boolean;
   menuItems: Array<string>;
-  handleClick: Function;
+  onClick: Function;
 }
 
 export default function MenuDropdown({
   title,
   menuItems,
-  handleClick,
+  onClick: handleClick,
 }: MenuDropdownProps) {
   return (
     <Menu closeOnBlur={true} closeOnSelect={true} preventOverflow={true}>
