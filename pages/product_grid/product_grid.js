@@ -4,12 +4,12 @@ import { useEffect } from 'react';
 import SkeletonCard from './skeleton_card';
 
 const fetcher = (...args) => fetch(...args).then((res) => res.json());
-const getKey = (pageIndex, previousPageData) => {
-  if (previousPageData && !previousPageData.length) return null; // reached the end
-  return `/api/products?orderReq=random&categoryReq=Shop_All&pageIndex=${pageIndex}&pageSize=20`; // SWR key
-};
 
-export default function ProductGrid({ inView }) {
+export default function ProductGrid({ inView, filter, sort }) {
+  const getKey = (pageIndex, previousPageData) => {
+    if (previousPageData && !previousPageData.length) return null; // reached the end
+    return `/api/products?orderReq=${sort}&categoryReq=${filter}&pageIndex=${pageIndex}&pageSize=20`; // SWR key
+  };
   const { data, size, setSize } = useSWRInfinite(getKey, fetcher);
   const gridClassName =
     'grid 2xl:grid-cols-5 xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-2 space-x-1 space-y-12 justify-items-center items-center pt-48';
