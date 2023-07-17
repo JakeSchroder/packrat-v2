@@ -13,7 +13,6 @@ export default function Home() {
   });
   const [filter, setFilter] = useState('Shop_All');
   const [sort, setSort] = useState('random');
-  console.log(filter, sort);
   return (
     <main>
       <Header setFilter={setFilter} setSort={setSort} />
