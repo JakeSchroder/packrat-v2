@@ -21,7 +21,7 @@ interface SortOrderMap {
 
 export const SORT_ORDER_MAP: SortOrderMap = {
   low_to_high: ['variants.price', 1],
-  high_to_low: ['variants.price', 1],
+  high_to_low: ['variants.price', -1],
   old_to_new: ['updated_at', 1],
   new_to_old: ['updated_at', -1],
   random: ['random_sort', 1],

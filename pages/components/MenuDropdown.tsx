@@ -4,9 +4,14 @@ interface MenuDropdownProps {
   title: string;
   priority: boolean;
   menuItems: Array<string>;
+  onClick: Function;
 }
 
-export default function MenuDropdown({ title, menuItems }: MenuDropdownProps) {
+export default function MenuDropdown({
+  title,
+  menuItems,
+  onClick,
+}: MenuDropdownProps) {
   return (
     <Menu closeOnBlur={true} closeOnSelect={true} preventOverflow={true}>
       <MenuButton
@@ -22,6 +27,7 @@ export default function MenuDropdown({ title, menuItems }: MenuDropdownProps) {
             <MenuItem
               className=" hover:bg-accent hover:font-medium p-2 h-8"
               key={index}
+              onClick={() => onClick(item)}
             >
               {item.replaceAll('_', ' ')}
             </MenuItem>
