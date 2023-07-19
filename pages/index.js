@@ -4,6 +4,7 @@ import ProductGrid from './product_grid/product_grid';
 import Footer from './footer/footer';
 import { useInView } from 'react-intersection-observer';
 import { useState } from 'react';
+import MobileMenu from './header/mobile_menu';
 const inter = Inter({ subsets: ['latin'] });
 
 export default function Home() {
@@ -16,6 +17,10 @@ export default function Home() {
   return (
     <main>
       <Header
+        setCategoryFilter={setCategoryFilter}
+        setOrderSort={setOrderSort}
+      />
+      <MobileMenu
         setCategoryFilter={setCategoryFilter}
         setOrderSort={setOrderSort}
       />
