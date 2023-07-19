@@ -3,8 +3,8 @@ import Logo from '../components/Logo';
 import { CATEGORIES, SORT_ORDER_MAP } from '../../src/constants/products';
 export default function Header({ setCategoryFilter, setOrderSort }) {
   return (
-    <div className="fixed min-w-full bg-background z-10 ">
-      <div className=" flex flex-row items-center justify-between px-24 py-6">
+    <div className=" sm:hidden fixed min-w-full bg-background z-10 ">
+      <div className=" flex flex-row items-center justify-between px-24 py-1 ">
         <MenuDropdown
           title={'Filter'}
           menuItems={CATEGORIES}
